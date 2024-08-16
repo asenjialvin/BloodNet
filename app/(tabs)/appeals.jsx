@@ -1,16 +1,25 @@
-import React from "react";
-import { SafeAreaView, FlatList, Text, View, TouchableOpacity, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
-import { getAllAppeals } from "../../lib/appwrite";
-import useAppwrite from "../../lib/useAppwrite";
-import { AppealCard } from "../../components";
-import { images } from "../../constants";
-import { createState} from "../../components";
+import React, { useState } from 'react';
+import { SafeAreaView, FlatList, Text, View, TouchableOpacity, Image, Modal } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import { getAllAppeals } from '../../lib/appwrite';
+import useAppwrite from '../../lib/useAppwrite';
+import { AppealCard } from '../../components';
+import { images } from '../../constants';
+import CreateAppeal from '../../components/CreateAppeal';
 
 const Appeals = () => {
   const navigation = useNavigation();
   const { data: appeals } = useAppwrite(getAllAppeals);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const handleCreateAppeal = () => {
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white', padding: 16 }}>
@@ -43,13 +52,21 @@ const Appeals = () => {
 
         <View className="flex-row items-center mt-4">
           <TouchableOpacity
-            onPress={() => navigation.navigate("../CreateAppeal")}
+            onPress={handleCreateAppeal}
             className="bg-red-500 p-4 rounded-full flex-row items-center"
           >
             <Ionicons name="add-circle" size={32} color="white" />
             <Text className="text-white ml-2 text-lg">Create Blood Appeal</Text>
           </TouchableOpacity>
         </View>
+
+        <Modal
+          visible={modalVisible}
+          onRequestClose={handleCloseModal}
+          animationType="slide"
+        >
+          <CreateAppeal onClose={handleCloseModal} />
+        </Modal>
       </View>
     </SafeAreaView>
   );
