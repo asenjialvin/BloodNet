@@ -21,7 +21,7 @@ const Profile = () => {
   };
 
   return (
-    <SafeAreaView className="bg-primary h-full">
+    <SafeAreaView className="bg-white h-full">
       <FlatList
         data={posts}
         keyExtractor={(item) => item.$id}
@@ -36,8 +36,8 @@ const Profile = () => {
         )}
         ListEmptyComponent={() => (
           <EmptyState
-            title="No Videos Found"
-            subtitle="No videos found for this profile"
+            title="Nothing for now"
+            subtitle="Nothing found for this profile"
           />
         )}
         ListHeaderComponent={() => (
@@ -64,20 +64,20 @@ const Profile = () => {
             <InfoBox
               title={user?.username}
               containerStyles="mt-5"
-              titleStyles="text-lg"
+              titleStyles="text-lg text-black"
             />
 
             <View className="mt-5 flex flex-row">
               <InfoBox
                 title={posts.length || 0}
                 subtitle="Posts"
-                titleStyles="text-xl"
+                titleStyles="text-xl text-black"
                 containerStyles="mr-10"
               />
               <InfoBox
                 title="1.2k"
                 subtitle="Followers"
-                titleStyles="text-xl"
+                titleStyles="text-xl text-black"
               />
             </View>
           </View>
