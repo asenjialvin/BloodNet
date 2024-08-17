@@ -20,13 +20,23 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
-        "sdk.dir": "/home/muhindi/Android/Sdk"
-      },
-      "package": "com.muhindi.bloodnet"
+        "sdk.dir": "/home/muhindi/Android/Sdk",
+        "package": "com.muhindi.bloodnet",
+        "googleMapsApiKey": "AIzaSyCzzzySEQVUzOXwH7Mb_J01MMWWJeIlFSI"
+      }
+      
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-router", "expo-font"]
+    "plugins": ["expo-router", "expo-font", "expo-location"],
+    "configPlugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(BloodNet) to use your location."
+        }
+      ]
+    ]
   }
 }

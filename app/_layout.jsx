@@ -1,12 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFonts } from "expo-font";
-import "react-native-url-polyfill/auto";
+import { Location } from "expo-location";
 import { SplashScreen, Stack } from "expo-router";
 
 import GlobalProvider from "../context/GlobalProvider";
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
@@ -21,6 +18,9 @@ const RootLayout = () => {
     "Poppins-Thin": require("../assets/fonts/Poppins-Thin.ttf"),
   });
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
   useEffect(() => {
     if (error) throw error;
 
@@ -28,6 +28,21 @@ const RootLayout = () => {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded, error]);
+
+  useEffect(() => {
+    const getLocation = async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    };
+
+    getLocation();
+  }, []);
 
   if (!fontsLoaded) {
     return null;
