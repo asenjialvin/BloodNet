@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
-import { StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { CustomButton, FormField } from "./";
+import CustomButton from './CustomButton';
+import FormField from './FormField';
+import { createAppeal } from '../lib/appwrite'; // Import the createAppeal function from the api file
 
 const CreateAppeal = ({ onClose, onAppealCreated }) => {
   const [title, setTitle] = useState('');
@@ -38,8 +39,6 @@ const CreateAppeal = ({ onClose, onAppealCreated }) => {
   const handleSubmit = async () => {
     try {
       const appeal = {
-        title,
-        description,
         county,
         hospital,
         bloodGroup,
@@ -48,8 +47,9 @@ const CreateAppeal = ({ onClose, onAppealCreated }) => {
         name,
         phoneNumber,
       };
-      await createAppeal(appeal);
+      await createAppeal(appeal); // Call the createAppeal function from the api file
       onClose();
+      onAppealCreated(); // Call the onAppealCreated function
     } catch (error) {
       console.error(error);
     }
@@ -92,7 +92,7 @@ const CreateAppeal = ({ onClose, onAppealCreated }) => {
         <Picker.Item label="O-" value="O-" />
       </Picker>
 
-      <Text style={ styles.text}>
+      <Text style={styles.text}>
         Compatible Blood Groups: {compatibleBloodGroups.join(', ')}
       </Text>
 
@@ -102,18 +102,21 @@ const CreateAppeal = ({ onClose, onAppealCreated }) => {
         handleChangeText={(e) => setBloodUnitsRequired(e)}
         otherStyles={styles.input}
       />
+
       <FormField
         title="Name"
         value={name}
         handleChangeText={(e) => setName(e)}
         otherStyles={styles.input}
       />
+
       <FormField
         title="Phone Number"
         value={phoneNumber}
         handleChangeText={(e) => setPhoneNumber(e)}
         otherStyles={styles.input}
       />
+     
 
       <CustomButton
           title="Submit"
@@ -128,38 +131,29 @@ const CreateAppeal = ({ onClose, onAppealCreated }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f7f7f7', 
-    padding: 20, 
+    padding: 16,
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#ff0000',
-    marginBottom: 20, 
+    marginBottom: 16,
+    color: '#333',
   },
   picker: {
-    width: 250, 
-    height: 50,
-    borderColor: '#000000',
-    borderWidth: 3,
-    borderRadius: 5,
-    marginBottom: 20, 
+    marginBottom: 16,
   },
   input: {
-    width: 250, 
-    height: 50,
-    borderColor: '#ccc',
+    marginBottom: 16,
+    padding: 10,
     borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 20, 
+    borderColor: '#ccc',
+    borderRadius: 4,
   },
   text: {
     fontSize: 16,
+    marginBottom: 16,
     color: '#333',
-    marginBottom: 20, 
   },
 });
 

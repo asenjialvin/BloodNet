@@ -16,17 +16,22 @@ const SignIn = () => {
     password: "",
   });
 
-  const submit = async () => {
-    if (form.email === "" || form.password === "") {
+  const handleFormChange = (field, value) => {
+    setForm((prevForm) => ({ ...prevForm, [field]: value }));
+  };
+
+  const handleSubmit = async () => {
+    if (!form.email || !form.password) {
       Alert.alert("Error", "Please fill in all fields");
+      return;
     }
 
     setSubmitting(true);
 
     try {
       await signIn(form.email, form.password);
-      const result = await getCurrentUser();
-      setUser(result);
+      const user = await getCurrentUser();
+      setUser(user);
       setIsLogged(true);
 
       Alert.alert("Success", "User signed in successfully");
@@ -60,7 +65,7 @@ const SignIn = () => {
           <FormField
             title="Email"
             value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
+            handleChangeText={(value) => handleFormChange("email", value)}
             otherStyles="mt-7"
             keyboardType="email-address"
           />
@@ -68,13 +73,13 @@ const SignIn = () => {
           <FormField
             title="Password"
             value={form.password}
-            handleChangeText={(e) => setForm({ ...form, password: e })}
+            handleChangeText={(value) => handleFormChange("password", value)}
             otherStyles="mt-7"
           />
 
           <CustomButton
             title="Sign In"
-            handlePress={submit}
+            handlePress={handleSubmit}
             containerStyles="mt-7"
             isLoading={isSubmitting}
           />
