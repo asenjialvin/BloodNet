@@ -32,6 +32,16 @@ const Appeals = () => {
           />
         </View>
 
+        <View className="flex-row items-center">
+          <TouchableOpacity
+            onPress={handleCreateAppeal}
+            className="bg-red-500 p-4 rounded-full flex-row items-center"
+          >
+            <Ionicons name="add-circle" size={32} color="white" />
+            <Text className="text-white ml-2 text-lg">Create Blood Appeal</Text>
+          </TouchableOpacity>
+        </View>
+
         <Text className="text-lg font-pmedium text-black-100 mb-4">
           Blood Appeals
         </Text>
@@ -49,16 +59,6 @@ const Appeals = () => {
           )}
           contentContainerStyle={{ paddingBottom: 80, alignItems: 'center' }}
         />
-
-        <View className="flex-row items-center mt-4">
-          <TouchableOpacity
-            onPress={handleCreateAppeal}
-            className="bg-red-500 p-4 rounded-full flex-row items-center"
-          >
-            <Ionicons name="add-circle" size={32} color="white" />
-            <Text className="text-white ml-2 text-lg">Create Blood Appeal</Text>
-          </TouchableOpacity>
-        </View>
 
         <Modal
           visible={modalVisible}
