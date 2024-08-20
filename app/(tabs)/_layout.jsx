@@ -94,7 +94,7 @@ const TabLayout = () => {
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
-                icon="add-circle"
+                icon="plus-circle"
                 color={color}
                 name="Create"
                 focused={focused}

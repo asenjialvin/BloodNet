@@ -13,17 +13,31 @@ const Home = () => {
 
   const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = async () => {
+  const handleRefresh = async () => {
     setRefreshing(true);
     await refetch();
     setRefreshing(false);
   };
 
-  // one flatlist
-  // with list header
-  // and horizontal flatlist
+  const HeaderComponent = () => (
+    <View className="flex my-6 px-4 space-y-6">
+      <View className="flex justify-between items-center flex-row mb-6">
+        <Text className="font-pmedium text-sm text-red-500">Welcome Back</Text>
+        <Image source={images.logoSmall} className="w-20 h-20" resizeMode="contain" />
+      </View>
 
-  //  we cannot do that with just scrollview as there's both horizontal and vertical scroll (two flat lists, within trending)
+      <SearchInput />
+
+      <View className="w-full flex-1 pt-5 pb-8">
+        <Text className="text-lg font-pregular text-black-100 mb-3">Latest Posts</Text>
+        <Trending posts={latestPosts ?? []} />
+      </View>
+    </View>
+  );
+
+  const EmptyListComponent = () => (
+    <EmptyState title="No Videos Found" subtitle="No videos created yet" />
+  );
 
   return (
     <SafeAreaView className="bg-white">
@@ -39,40 +53,9 @@ const Home = () => {
             avatar={item.creator.avatar}
           />
         )}
-        ListHeaderComponent={() => (
-          <View className="flex my-6 px-4 space-y-6">
-            <View className="flex justify-between items-center flex-row mb-6">
-              <Text className="font-pmedium text-sm text-red-500">
-                Welcome Back
-              </Text>
-
-              <Image
-                source={images.logoSmall}
-                className="w-20 h-20"
-                resizeMode="contain"
-              />
-            </View>
-
-            <SearchInput />
-
-            <View className="w-full flex-1 pt-5 pb-8">
-              <Text className="text-lg font-pregular text-black-100 mb-3">
-                Latest Appeals
-              </Text>
-
-              <Trending posts={latestPosts ?? []} />
-            </View>
-          </View>
-        )}
-        ListEmptyComponent={() => (
-          <EmptyState
-            title="No Videos Found"
-            subtitle="No videos created yet"
-          />
-        )}
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }
+        ListHeaderComponent={HeaderComponent}
+        ListEmptyComponent={EmptyListComponent}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
       />
     </SafeAreaView>
   );
