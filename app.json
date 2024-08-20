@@ -27,7 +27,12 @@
       
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "foregroundImage": "./assets/adaptive-icon.png",
+      "backgroundColor": "#ffffff",
+      "sdk.dir": "/home/muhindi/Android/Sdk",
+      "package": "com.muhindi.bloodnet",
+      "googleMapsApiKey": "AIzaSyCzzzySEQVUzOXwH7Mb_J01MMWWJeIlFSI"
     },
     "plugins": ["expo-router", "expo-font", "expo-location"],
     "configPlugins": [

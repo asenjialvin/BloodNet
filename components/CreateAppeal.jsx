@@ -47,9 +47,9 @@ const CreateAppeal = ({ onClose, onAppealCreated }) => {
         name,
         phoneNumber,
       };
-      await createAppeal(appeal); // Call the createAppeal function from the api file
+      await createAppeal(appeal); 
       onClose();
-      onAppealCreated(); // Call the onAppealCreated function
+      // onAppealCreated();
     } catch (error) {
       console.error(error);
     }
